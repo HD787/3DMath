@@ -16,7 +16,7 @@ void createRotationMatrixX(float angle, float matrix[16]) {
     matrix[3] = 0.0f;           matrix[7] = 0.0f;           matrix[11] = 0.0f;          matrix[15] = 1.0f;
 }
 
-void createRotationMatrixX(float angle, float matrix[16]) {
+void createRotationMatrixZ(float angle, float matrix[16]) {
     float radians = angle * 3.14159265f / 180.0f;
     matrix[0] = cosf(radians);  matrix[4] = -sinf(radians); matrix[8] = 0.0f;   matrix[12] = 0.0f;
     matrix[1] = sinf(radians);  matrix[5] = cosf(radians);  matrix[9] = 0.0f;   matrix[13] = 0.0f;
