@@ -40,8 +40,11 @@ void createTranslationMatrix(float x, float y, float z, float matrix[16]){
 
 void createPerspectiveProjectionMatrix(float FOVdegrees, float nearPlane, float farPlane, float aspectRatio, float matrix[16]){
     float FOVradians = FOVdegrees * 3.14159265f / 180.0f;
-    matrix[0] = farPlane / aspectRatio;    matrix[4] = 0.0f;          matrix[8] = 0.0f;                                           matrix[12] = 0.0f;
-    matrix[1] = 0.0f;                    matrix[5] = farPlane;      matrix[9] = 0.0;                                            matrix[13] = 0.0f;
-    matrix[2] = 0.0;                     matrix[6] = 0.0f;          matrix[10] = (farPlane + nearPlane)/(nearPlane - farPlane);   matrix[14] = (2 * farPlane*nearPlane)/(nearPlane - farPlane);
-    matrix[3] = 0.0f;                    matrix[7] = 0.0f;          matrix[11] = -1.0f;                                         matrix[15] = 0.0f;
+    float yScale = 1.0f / tan(FOVradians / 2.0f);
+    float xScale = yScale / aspectRatio;
+    float frustumDepth = farPlane - nearPlane;
+    matrix[0] = xScale;    matrix[4] = 0.0f;      matrix[8] = 0.0f;                                    matrix[12] = 0.0f;
+    matrix[1] = 0.0f;      matrix[5] = yScale;    matrix[9] = 0.0;                                     matrix[13] = 0.0f;
+    matrix[2] = 0.0;       matrix[6] = 0.0f;      matrix[10] = -(farPlane + nearPlane)/frustumDepth;   matrix[14] = -2 * farPlane * nearPlane/frustumDepth;
+    matrix[3] = 0.0f;      matrix[7] = 0.0f;      matrix[11] = -1.0f;                                  matrix[15] = 0.0f;
 }
