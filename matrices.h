@@ -30,7 +30,7 @@ void createScalingMatrix(float scaleFactor, float matrix[16]) {
     matrix[2] = 0.0;            matrix[6] = 0.0f;           matrix[10] = scaleFactor; matrix[14] = 0.0f;
     matrix[3] = 0.0f;           matrix[7] = 0.0f;           matrix[11] = 0.0f;        matrix[15] = 1.0f;
 }
-//unsure whether or not I want to include a speed paramater here to scale the values or just do that when gathering input
+
 void createTranslationMatrix(float x, float y, float z, float matrix[16]){
     matrix[0] = 1.0;    matrix[4] = 0.0f;   matrix[8] = 0.0f;   matrix[12] = x;
     matrix[1] = 0.0f;   matrix[5] = 1.0;    matrix[9] = 0.0;    matrix[13] = y;
