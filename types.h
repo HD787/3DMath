@@ -7,7 +7,7 @@ typedef struct{
 }vec3;
 
 typedef struct{
-    float w, x, y, z;
+    float real, i, j, k;
 }quaternion;
 
 typedef float matrix4x4[16];
