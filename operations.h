@@ -12,6 +12,16 @@ void vecByMatrix4x4(vec4* vec, matrix4x4 matrix){
     vec->real = real;
 }
 
+//idk if i love these names as the types and the parametes follow the same scheme
+//but i already did something similar with quaternion paremeters and i want to be consistent
+vec3 crossProduct(vec3 vec1, vec3 vec2){
+    vec3 result;
+    result.x = vec1.y * vec2.z - vec1.z * vec2.y;
+    result.y = vec1.z * vec2.x- vec1.x * vec2.z;
+    result.z = vec1.x * vec2.y - vec1.y * vec2.z;
+    return result;
+}
+
 //Quaternion operations
 void normalizeQuatertion(quaternion* quat){
    double normalVal = sqrt(quat->real * quat->real + quat->i * quat->i + quat->j * quat->j + quat->k * quat->k);
