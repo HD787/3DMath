@@ -1,6 +1,8 @@
 #include "matrices.h"
 #include "types.h"
 //Matrix operations
+//not sure it makes sense to use pointers for this, might want to return a new vector
+//acutually i think it does make sense, im gonna keep thinking about this for now
 void vecByMatrix4x4(vec4* vec, matrix4x4 matrix){
     float x = vec->x * matrix[0] + vec->y * matrix[4] + vec->z * matrix[8] + vec->w * matrix[12];
     float y = vec->x * matrix[1] + vec->y * matrix[5] + vec->z * matrix[9] + vec->w * matrix[13];
@@ -12,7 +14,7 @@ void vecByMatrix4x4(vec4* vec, matrix4x4 matrix){
     vec->w = w;
 }
 
-//idk if i love these names as the types and the parameters follow the same scheme
+//idk if i love these parameter names as the types and the parameters follow the same scheme
 //but i already did something similar with quaternion paremeters and i want to be consistent
 vec3 crossProduct(vec3 vec1, vec3 vec2){
     vec3 result;
@@ -25,6 +27,15 @@ vec3 crossProduct(vec3 vec1, vec3 vec2){
 float dotProduct(vec3 vec1, vec3 vec2){
     return vec1.x * vec2.x + vec1.y * vec2.y + vec1.z * vec2.z;
 }
+
+void normalizeVector(vec3* vec){
+    float normalVal = sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
+    vec.x /= normalVal;
+    vec.y /= normalVal;
+    vec.z /= normalVal;
+}
+
+
 
 //Quaternion operations
 void normalizeQuatertion(quaternion* quat){
