@@ -12,7 +12,7 @@ void vecByMatrix4x4(vec4* vec, matrix4x4 matrix){
     vec->w = w;
 }
 
-//idk if i love these names as the types and the parametes follow the same scheme
+//idk if i love these names as the types and the parameters follow the same scheme
 //but i already did something similar with quaternion paremeters and i want to be consistent
 vec3 crossProduct(vec3 vec1, vec3 vec2){
     vec3 result;
@@ -20,6 +20,10 @@ vec3 crossProduct(vec3 vec1, vec3 vec2){
     result.y = vec1.z * vec2.x- vec1.x * vec2.z;
     result.z = vec1.x * vec2.y - vec1.y * vec2.z;
     return result;
+}
+
+float dotProduct(vec3 vec1, vec3 vec2){
+    return vec1.x * vec2.x + vec1.y * vec2.y + vec1.z * vec2.z;
 }
 
 //Quaternion operations
@@ -39,6 +43,16 @@ quaternion multiplyQuaternion(quaternion* quat1, quaternion* quat2){
     temp.j = (quat1->real * quat2->j - quat1->i * quat2->k + quat1->j * quat2->real - quat1->k + quat2->i);
     temp.k = (quat1->real * quat2->k - quat1->i * quat2->j - quat1->j * quat2->i + quat1->k + quat2->real);
     return temp;
+}
+
+quaternion createRotationQuaternion(float angle){
+    quaternion result;
+    float radians = angle * 3.14159265f / 180.0f;
+    result.real = cos(radians / 2);
+    result.i = sin(radians / 2);
+    result.j = sin(radians / 2);
+    result.k = sin(radians / 2);
+    return result;
 }
 
 quaternion createConjugate(quaternion quat){
@@ -67,10 +81,10 @@ vec3 quaternionToVector(quaternion quat){
     return temp;
 }
 
-vec3 rotateVectorViaQuaternion(vec3* vec, quaternion* quat){
+vec3 rotateVectorViaQuaternion(vec3* vec, quaternion* rotationQuat){
     quaternion vquat = vectorToQuaternion(*vec);
-    quaternion conjugate = createConjugate(*quat);
-    quaternion temp = multiplyQuaternion(quat, &vquat);
+    quaternion conjugate = createConjugate(*rotationQuat);
+    quaternion temp = multiplyQuaternion(rotationQuat, &vquat);
     quaternion resultQuat = multiplyQuaternion(&temp, &conjugate);
     vec3 result = quaternionToVector(resultQuat);
     return result;
