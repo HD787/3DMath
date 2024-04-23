@@ -29,10 +29,10 @@ float dotProduct(vec3 vec1, vec3 vec2){
 }
 
 void normalizeVector(vec3* vec){
-    float normalVal = sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
-    vec.x /= normalVal;
-    vec.y /= normalVal;
-    vec.z /= normalVal;
+    float normalVal = sqrt(vec->x * vec->x + vec->y * vec->y + vec->z * vec->z);
+    vec->x /= normalVal;
+    vec->y /= normalVal;
+    vec->z /= normalVal;
 }
 
 
