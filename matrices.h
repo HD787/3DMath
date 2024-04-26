@@ -44,7 +44,27 @@ void createPerspectiveProjectionMatrix(float FOVdegrees, float nearPlane, float 
     float xScale = yScale / aspectRatio;
     float frustumDepth = farPlane - nearPlane;
     matrix[0] = xScale;    matrix[4] = 0.0f;      matrix[8] = 0.0f;                                    matrix[12] = 0.0f;
-    matrix[1] = 0.0f;      matrix[5] = yScale;    matrix[9] = 0.0f;                                     matrix[13] = 0.0f;
-    matrix[2] = 0.0f;       matrix[6] = 0.0f;      matrix[10] = -(farPlane + nearPlane)/frustumDepth;   matrix[14] = -2 * farPlane * nearPlane/frustumDepth;
+    matrix[1] = 0.0f;      matrix[5] = yScale;    matrix[9] = 0.0f;                                    matrix[13] = 0.0f;
+    matrix[2] = 0.0f;      matrix[6] = 0.0f;      matrix[10] = -(farPlane + nearPlane)/frustumDepth;   matrix[14] = -2 * farPlane * nearPlane/frustumDepth;
     matrix[3] = 0.0f;      matrix[7] = 0.0f;      matrix[11] = -1.0f;                                  matrix[15] = 0.0f;
+}
+
+
+void createAlternatePerspectiveProjectionMatrix(float FOVdegrees, float nearPlane, float farPlane, float aspectRatio, float matrix[16]){
+    float FOVradians = FOVdegrees * 3.14159265f / 180.0f;
+    float yScale = 1.0f / tan(FOVradians / 2.0f);
+    float xScale = yScale * aspectRatio;
+    float frustumDepth = farPlane - nearPlane;
+    matrix[0] = xScale;    matrix[4] = 0.0f;      matrix[8] = 0.0f;                                    matrix[12] = 0.0f;
+    matrix[1] = 0.0f;      matrix[5] = yScale;    matrix[9] = 0.0f;                                    matrix[13] = 0.0f;
+    matrix[2] = 0.0f;      matrix[6] = 0.0f;      matrix[10] = (farPlane)/frustumDepth;   matrix[14] = -(farPlane * nearPlane/frustumDepth);
+    matrix[3] = 0.0f;      matrix[7] = 0.0f;      matrix[11] = 1.0f;                                  matrix[15] = 0.0f;
+}
+
+void createNDCToScreenSpaceMatrix(float width, float height, float matrix[16]){
+    //dont compose this matrix with others, reset w coords before use
+    matrix[0] = (width / 2.0f);     matrix[4] = 0.0f;               matrix[8] = 0.0f;               matrix[12] = (width / 2.0f);
+    matrix[1] = 0.0f;               matrix[5] = (height / 2.0f);    matrix[9] = 0.0;                matrix[13] = (height / 2.0f);
+    matrix[2] = 0.0;                matrix[6] = 0.0f;               matrix[10] = (height / 2.0f);   matrix[14] = (height / 2.0f);
+    matrix[3] = 0.0f;               matrix[7] = 0.0f;               matrix[11] = 0.0f;              matrix[15] = 1.0f;
 }
