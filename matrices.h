@@ -63,6 +63,8 @@ void createAlternatePerspectiveProjectionMatrix(float FOVdegrees, float nearPlan
 
 void createNDCToScreenSpaceMatrix(float width, float height, float matrix[16]){
     //dont compose this matrix with others, reset w coords before use
+    //1 for w
+    //figuring out the scaling of the z values still
     matrix[0] = (width / 2.0f);     matrix[4] = 0.0f;               matrix[8] = 0.0f;               matrix[12] = (width / 2.0f);
     matrix[1] = 0.0f;               matrix[5] = (height / 2.0f);    matrix[9] = 0.0;                matrix[13] = (height / 2.0f);
     matrix[2] = 0.0;                matrix[6] = 0.0f;               matrix[10] = (height / 2.0f);   matrix[14] = (height / 2.0f);
