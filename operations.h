@@ -1,5 +1,5 @@
 #include "matrices.h"
-#include "types.h"
+#include "mathTypes.h"
 //Matrix operations
 //not sure it makes sense to use pointers for this, might want to return a new vector
 //acutually i think it does make sense, im gonna keep thinking about this for now

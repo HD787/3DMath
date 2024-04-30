@@ -55,10 +55,10 @@ void createAlternatePerspectiveProjectionMatrix(float FOVdegrees, float nearPlan
     float yScale = 1.0f / tan(FOVradians / 2.0f);
     float xScale = yScale * aspectRatio;
     float frustumDepth = farPlane - nearPlane;
-    matrix[0] = xScale;    matrix[4] = 0.0f;      matrix[8] = 0.0f;                                    matrix[12] = 0.0f;
-    matrix[1] = 0.0f;      matrix[5] = yScale;    matrix[9] = 0.0f;                                    matrix[13] = 0.0f;
-    matrix[2] = 0.0f;      matrix[6] = 0.0f;      matrix[10] = (farPlane)/frustumDepth;   matrix[14] = -(farPlane * nearPlane/frustumDepth);
-    matrix[3] = 0.0f;      matrix[7] = 0.0f;      matrix[11] = 1.0f;                                  matrix[15] = 0.0f;
+    matrix[0] = xScale;    matrix[4] = 0.0f;      matrix[8] = 0.0f;                     matrix[12] = 0.0f;
+    matrix[1] = 0.0f;      matrix[5] = yScale;    matrix[9] = 0.0f;                     matrix[13] = 0.0f;
+    matrix[2] = 0.0f;      matrix[6] = 0.0f;      matrix[10] = (farPlane)/frustumDepth; matrix[14] = -(farPlane * nearPlane/frustumDepth);
+    matrix[3] = 0.0f;      matrix[7] = 0.0f;      matrix[11] = 1.0f;                    matrix[15] = 0.0f;
 }
 
 void createNDCToScreenSpaceMatrix(float width, float height, float matrix[16]){
