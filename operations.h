@@ -45,22 +45,22 @@ void normalizeQuatertion(quaternion* quat){
    quat->k /= normalVal; 
 }
 
-quaternion multiplyQuaternion(quaternion* quat1, quaternion* quat2){
+quaternion multiplyQuaternion(quaternion quat1, quaternion quat2){
     quaternion temp;
-    temp.real = (quat1->real * quat2->real - quat1->i * quat2->i - quat1->j * quat2->j - quat1->k + quat2->k);
-    temp.i = (quat1->real * quat2->i + quat1->i * quat2->real + quat1->j * quat2->k - quat1->k + quat2->j);
-    temp.j = (quat1->real * quat2->j - quat1->i * quat2->k + quat1->j * quat2->real - quat1->k + quat2->i);
-    temp.k = (quat1->real * quat2->k - quat1->i * quat2->j - quat1->j * quat2->i + quat1->k + quat2->real);
+    temp.real = (quat1.real * quat2.real - quat1.i * quat2.i - quat1.j * quat2.j - quat1.k * quat2.k);
+    temp.i = (quat1.real * quat2.i + quat1.i * quat2.real + quat1.j * quat2.k - quat1.k * quat2.j);
+    temp.j = (quat1.real * quat2.j - quat1.i * quat2.k + quat1.j * quat2.real + quat1.k * quat2.i);
+    temp.k = (quat1.real * quat2.k + quat1.i * quat2.j - quat1.j * quat2.i + quat1.k * quat2.real);
     return temp;
 }
 
-quaternion createRotationQuaternion(float angle){
+quaternion createRotationQuaternion(float angle, float x, float y, float z){
     quaternion result;
     float radians = angle * 3.14159265f / 180.0f;
     result.real = cos(radians / 2);
-    result.i = sin(radians / 2);
-    result.j = sin(radians / 2);
-    result.k = sin(radians / 2);
+    result.i = x * sin(radians / 2);
+    result.j = y * sin(radians / 2);
+    result.k = z * sin(radians / 2);
     return result;
 }
 
@@ -82,7 +82,7 @@ quaternion vectorToQuaternion(vec3 v){
     return temp;
 }
 
-vec3 quaternionTovector(quaternion quat){
+vec3 quaternionToVector(quaternion quat){
     vec3 temp;
     temp.x = quat.i;
     temp.y = quat.j;
@@ -90,12 +90,30 @@ vec3 quaternionTovector(quaternion quat){
     return temp;
 }
 
-vec3 rotatevectorViaQuaternion(vec3* v, quaternion* rotationQuat){
+void rotateVectorViaQuaternion(vec3* v, quaternion rotationQuat){
     quaternion vquat = vectorToQuaternion(*v);
-    quaternion conjugate = createConjugate(*rotationQuat);
-    quaternion temp = multiplyQuaternion(rotationQuat, &vquat);
-    quaternion resultQuat = multiplyQuaternion(&temp, &conjugate);
-    vec3 result = quaternionTovector(resultQuat);
+    quaternion conjugate = createConjugate(rotationQuat);
+    quaternion temp = multiplyQuaternion(rotationQuat, vquat);
+    quaternion resultQuat = multiplyQuaternion(temp, conjugate);
+    vec3 result = quaternionToVector(resultQuat);
+    v->x = result.x; v->y = result.y; v->z = result.z;
+}
+
+//vector operations
+vec4 homogenizeVector(vec3 v){
+    vec4 result;
+    result.x = v.x;
+    result.y = v.y;
+    result.z = v.z;
+    result.w = 1.0;
+    return result;
+}
+
+vec3 dehomogenizeVector(vec4 v){
+    vec3 result;
+    result.x = v.x;
+    result.y = v.y;
+    result.z = v.z;
     return result;
 }
 
