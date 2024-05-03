@@ -3,36 +3,34 @@
 //Matrix operations
 //not sure it makes sense to use pointers for this, might want to return a new vector
 //acutually i think it does make sense, im gonna keep thinking about this for now
-void vecByMatrix4x4(vec4* vec, matrix4x4 matrix){
-    float x = vec->x * matrix[0] + vec->y * matrix[4] + vec->z * matrix[8] + vec->w * matrix[12];
-    float y = vec->x * matrix[1] + vec->y * matrix[5] + vec->z * matrix[9] + vec->w * matrix[13];
-    float z = vec->x * matrix[2] + vec->y * matrix[6] + vec->z * matrix[10] + vec->w * matrix[14];
-    float w = vec->x * matrix[3] + vec->y * matrix[7] + vec->z * matrix[11] + vec->w * matrix[15];
-    vec->x = x;
-    vec->y = y;
-    vec->z = z;
-    vec->w = w;
+void vecByMatrix4x4(vec4* v, matrix4x4 matrix){
+    float x = v->x * matrix[0] + v->y * matrix[4] + v->z * matrix[8] + v->w * matrix[12];
+    float y = v->x * matrix[1] + v->y * matrix[5] + v->z * matrix[9] + v->w * matrix[13];
+    float z = v->x * matrix[2] + v->y * matrix[6] + v->z * matrix[10] + v->w * matrix[14];
+    float w = v->x * matrix[3] + v->y * matrix[7] + v->z * matrix[11] + v->w * matrix[15];
+    v->x = x;
+    v->y = y;
+    v->z = z;
+    v->w = w;
 }
 
-//idk if i love these parameter names as the types and the parameters follow the same scheme
-//but i already did something similar with quaternion paremeters and i want to be consistent
-vec3 crossProduct(vec3 vec1, vec3 vec2){
+vec3 crossProduct(vec3 v1, vec3 v2){
     vec3 result;
-    result.x = vec1.y * vec2.z - vec1.z * vec2.y;
-    result.y = vec1.z * vec2.x- vec1.x * vec2.z;
-    result.z = vec1.x * vec2.y - vec1.y * vec2.z;
+    result.x = v1.y * v2.z - v1.z * v2.y;
+    result.y = v1.z * v2.x- v1.x * v2.z;
+    result.z = v1.x * v2.y - v1.y * v2.x;
     return result;
 }
 
-float dotProduct(vec3 vec1, vec3 vec2){
-    return vec1.x * vec2.x + vec1.y * vec2.y + vec1.z * vec2.z;
+float dotProduct(vec3 v1, vec3 v2){
+    return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
 }
 
-void normalizeVector(vec3* vec){
-    float normalVal = sqrt(vec->x * vec->x + vec->y * vec->y + vec->z * vec->z);
-    vec->x /= normalVal;
-    vec->y /= normalVal;
-    vec->z /= normalVal;
+void normalizeVector(vec3* v){
+    float normalVal = sqrt(v->x * v->x + v->y * v->y + v->z * v->z);
+    v->x /= normalVal;
+    v->y /= normalVal;
+    v->z /= normalVal;
 }
 
 
@@ -75,16 +73,16 @@ quaternion createConjugate(quaternion quat){
     return temp;
 }
 
-quaternion vectorToQuaternion(vec3 vec){
+quaternion vectorToQuaternion(vec3 v){
     quaternion temp;
     temp.real = 0;
-    temp.i = vec.x;
-    temp.j = vec.y;
-    temp.k = vec.z;
+    temp.i = v.x;
+    temp.j = v.y;
+    temp.k = v.z;
     return temp;
 }
 
-vec3 quaternionToVector(quaternion quat){
+vec3 quaternionTovector(quaternion quat){
     vec3 temp;
     temp.x = quat.i;
     temp.y = quat.j;
@@ -92,11 +90,17 @@ vec3 quaternionToVector(quaternion quat){
     return temp;
 }
 
-vec3 rotateVectorViaQuaternion(vec3* vec, quaternion* rotationQuat){
-    quaternion vquat = vectorToQuaternion(*vec);
+vec3 rotatevectorViaQuaternion(vec3* v, quaternion* rotationQuat){
+    quaternion vquat = vectorToQuaternion(*v);
     quaternion conjugate = createConjugate(*rotationQuat);
     quaternion temp = multiplyQuaternion(rotationQuat, &vquat);
     quaternion resultQuat = multiplyQuaternion(&temp, &conjugate);
-    vec3 result = quaternionToVector(resultQuat);
+    vec3 result = quaternionTovector(resultQuat);
     return result;
+}
+
+//Misc
+float max(float f1, float f2){
+    if(f1>f2) return f1;
+    return f2;
 }
