@@ -117,8 +117,20 @@ vec3 dehomogenizeVector(vec4 v){
     return result;
 }
 
+vec3 dehomogenizeVectorWithPersective(vec4 v){
+    vec3 result;
+    result.x = v.x / v.w;
+    result.y = v.y / v.w;
+    result.z = v.z / v.w;
+    return result; 
+}
+
 //Misc
 float max(float f1, float f2){
     if(f1>f2) return f1;
     return f2;
+}
+
+void expandDepthRange(vec4* v,float bias, float scale){
+    v->z = bias + scale * v->z;
 }
