@@ -1,5 +1,17 @@
 #include <math.h>
 
+void createRotationMatrix(float angle, float x, float y, float z, float matrix[16]){
+    float radians = angle * 3.14159265f / 180.0f;
+    float magnitude = sqrt(x * x + y * y + z * z);
+    x /= magnitude;
+    y /= magnitude;
+    z /= magnitude;
+    matrix[0] = (1 - cos(radians)) * x * x + cos(radians);         matrix[4] = (1 - cos(radians)) * x * y - sin(radians) * z;   matrix[8] = (1 - cos(radians)) * x * z + sin(radians) * y;    matrix[12] = 0;
+    matrix[1] = (1 - cos(radians)) * x * y + sin(radians) * z;     matrix[5] = (1 - cos(radians)) * y * y + cos(radians);       matrix[9] = (1 - cos(radians)) * y * z - sin(radians) * x;    matrix[13] = 0;
+    matrix[2] = (1 - cos(radians)) * x * z - sin(radians) * y;     matrix[6] = (1 - cos(radians)) * y * z + sin(radians) * x;   matrix[10] = (1 - cos(radians)) * z * z + cos(radians);       matrix[14] = 0;
+    matrix[3] = 0;                                                 matrix[7] = 0;                                               matrix[11] = 0;                                               matrix[15] = 1;
+}
+
 void createRotationMatrixY(float angle, float matrix[16]) {
     float radians = angle * 3.14159265f / 180.0f;
     matrix[0] = cosf(radians);  matrix[4] = 0.0f; matrix[8] = sinf(radians);  matrix[12] = 0.0f;
@@ -45,15 +57,15 @@ void createPerspectiveProjectionMatrix(float FOVdegrees, float nearPlane, float 
     float frustumDepth = farPlane - nearPlane;
     matrix[0] = xScale;    matrix[4] = 0.0f;      matrix[8] = 0.0f;                                    matrix[12] = 0.0f;
     matrix[1] = 0.0f;      matrix[5] = yScale;    matrix[9] = 0.0f;                                    matrix[13] = 0.0f;
-    matrix[2] = 0.0f;      matrix[6] = 0.0f;      matrix[10] = -(farPlane + nearPlane)/frustumDepth;   matrix[14] = -2 * farPlane * nearPlane/frustumDepth;
-    matrix[3] = 0.0f;      matrix[7] = 0.0f;      matrix[11] = -1.0f;                                  matrix[15] = 0.0f;
+    matrix[2] = 0.0f;      matrix[6] = 0.0f;      matrix[10] = (farPlane + nearPlane)/frustumDepth;   matrix[14] = 2 * farPlane * nearPlane/frustumDepth;
+    matrix[3] = 0.0f;      matrix[7] = 0.0f;      matrix[11] = 1.0f;                                  matrix[15] = 0.0f;
 }
 
 
-void createAlternatePerspectiveProjectionMatrix(float FOVdegrees, float nearPlane, float farPlane, float aspectRatio, float matrix[16]){
+void createAlternativePerspectiveProjectionMatrix(float FOVdegrees, float nearPlane, float farPlane, float aspectRatio, float matrix[16]){
     float FOVradians = FOVdegrees * 3.14159265f / 180.0f;
     float yScale = 1.0f / tan(FOVradians / 2.0f);
-    float xScale = yScale * aspectRatio;
+    float xScale = yScale - aspectRatio;
     float frustumDepth = farPlane - nearPlane;
     matrix[0] = xScale;    matrix[4] = 0.0f;      matrix[8] = 0.0f;                     matrix[12] = 0.0f;
     matrix[1] = 0.0f;      matrix[5] = yScale;    matrix[9] = 0.0f;                     matrix[13] = 0.0f;
@@ -61,6 +73,7 @@ void createAlternatePerspectiveProjectionMatrix(float FOVdegrees, float nearPlan
     matrix[3] = 0.0f;      matrix[7] = 0.0f;      matrix[11] = 1.0f;                    matrix[15] = 0.0f;
 }
 
+//this might not make sense
 void createNDCToScreenSpaceMatrix(float width, float height, float matrix[16]){
     //dont compose this matrix with others, reset w coords before use
     //1 for w
