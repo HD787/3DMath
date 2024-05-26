@@ -6,10 +6,10 @@ void createRotationMatrix(float angle, float x, float y, float z, float matrix[1
     x /= magnitude;
     y /= magnitude;
     z /= magnitude;
-    matrix[0] = (1 - cos(radians)) * x * x + cos(radians);         matrix[4] = (1 - cos(radians)) * x * y - sin(radians) * z;   matrix[8] = (1 - cos(radians)) * x * z + sin(radians) * y;    matrix[12] = 0;
-    matrix[1] = (1 - cos(radians)) * x * y + sin(radians) * z;     matrix[5] = (1 - cos(radians)) * y * y + cos(radians);       matrix[9] = (1 - cos(radians)) * y * z - sin(radians) * x;    matrix[13] = 0;
-    matrix[2] = (1 - cos(radians)) * x * z - sin(radians) * y;     matrix[6] = (1 - cos(radians)) * y * z + sin(radians) * x;   matrix[10] = (1 - cos(radians)) * z * z + cos(radians);       matrix[14] = 0;
-    matrix[3] = 0;                                                 matrix[7] = 0;                                               matrix[11] = 0;                                               matrix[15] = 1;
+    matrix[0] = (1 - cos(radians)) * x * x + cos(radians);         matrix[4] = (1 - cos(radians)) * x * y - sin(radians) * z;   matrix[8] = (1 - cos(radians)) * x * z + sin(radians) * y;    matrix[12] = 0.0f;
+    matrix[1] = (1 - cos(radians)) * x * y + sin(radians) * z;     matrix[5] = (1 - cos(radians)) * y * y + cos(radians);       matrix[9] = (1 - cos(radians)) * y * z - sin(radians) * x;    matrix[13] = 0.0f;
+    matrix[2] = (1 - cos(radians)) * x * z - sin(radians) * y;     matrix[6] = (1 - cos(radians)) * y * z + sin(radians) * x;   matrix[10] = (1 - cos(radians)) * z * z + cos(radians);       matrix[14] = 0.0f;
+    matrix[3] = 0.0f;                                              matrix[7] = 0.0f;                                            matrix[11] = 0.0f;                                            matrix[15] = 1.0f;
 }
 
 void createRotationMatrixY(float angle, float matrix[16]) {
@@ -39,15 +39,15 @@ void createRotationMatrixZ(float angle, float matrix[16]) {
 void createScalingMatrix(float scaleFactor, float matrix[16]) {
     matrix[0] = scaleFactor;    matrix[4] = 0.0f;           matrix[8] = 0.0f;         matrix[12] = 0.0f;
     matrix[1] = 0.0f;           matrix[5] = scaleFactor;    matrix[9] = 0.0;          matrix[13] = 0.0f;
-    matrix[2] = 0.0;            matrix[6] = 0.0f;           matrix[10] = scaleFactor; matrix[14] = 0.0f;
+    matrix[2] = 0.0f;           matrix[6] = 0.0f;           matrix[10] = scaleFactor; matrix[14] = 0.0f;
     matrix[3] = 0.0f;           matrix[7] = 0.0f;           matrix[11] = 0.0f;        matrix[15] = 1.0f;
 }
 
 void createTranslationMatrix(float x, float y, float z, float matrix[16]){
-    matrix[0] = 1.0;    matrix[4] = 0.0f;   matrix[8] = 0.0f;   matrix[12] = x;
-    matrix[1] = 0.0f;   matrix[5] = 1.0;    matrix[9] = 0.0;    matrix[13] = y;
-    matrix[2] = 0.0;    matrix[6] = 0.0f;   matrix[10] = 1.0;   matrix[14] = z;
-    matrix[3] = 0.0f;   matrix[7] = 0.0f;   matrix[11] = 0.0f;  matrix[15] = 1.0f;
+    matrix[0] = 1.0f;    matrix[4] = 0.0f;   matrix[8] = 0.0f;    matrix[12] = x;
+    matrix[1] = 0.0f;    matrix[5] = 1.0f;   matrix[9] = 0.0f;    matrix[13] = y;
+    matrix[2] = 0.0f;    matrix[6] = 0.0f;   matrix[10] = 1.0f;   matrix[14] = z;
+    matrix[3] = 0.0f;    matrix[7] = 0.0f;   matrix[11] = 0.0f;   matrix[15] = 1.0f;
 }
 
 void createPerspectiveProjectionMatrix(float FOVdegrees, float nearPlane, float farPlane, float aspectRatio, float matrix[16]){
@@ -69,7 +69,7 @@ void createAlternativePerspectiveProjectionMatrix(float FOVdegrees, float nearPl
     float frustumDepth = farPlane - nearPlane;
     matrix[0] = xScale;    matrix[4] = 0.0f;      matrix[8] = 0.0f;                     matrix[12] = 0.0f;
     matrix[1] = 0.0f;      matrix[5] = yScale;    matrix[9] = 0.0f;                     matrix[13] = 0.0f;
-    matrix[2] = 0.0f;      matrix[6] = 0.0f;      matrix[10] = (farPlane)/frustumDepth; matrix[14] = -(farPlane * nearPlane/frustumDepth);
+    matrix[2] = 0.0f;      matrix[6] = 0.0f;      matrix[10] = (farPlane)/frustumDepth; matrix[14] = (farPlane * nearPlane/frustumDepth);
     matrix[3] = 0.0f;      matrix[7] = 0.0f;      matrix[11] = 1.0f;                    matrix[15] = 0.0f;
 }
 
