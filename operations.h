@@ -1,13 +1,10 @@
 #include "matrices.h"
 #include "mathTypes.h"
-//Matrix operations
-//not sure it makes sense to use pointers for this, might want to return a new vector
-//acutually i think it does make sense, im gonna keep thinking about this for now
 void vecByMatrix4x4(vec4* v, matrix4x4 matrix){
-    float x = v->x * matrix[0] + v->y * matrix[4] + v->z * matrix[8] + v->w * matrix[12];
-    float y = v->x * matrix[1] + v->y * matrix[5] + v->z * matrix[9] + v->w * matrix[13];
-    float z = v->x * matrix[2] + v->y * matrix[6] + v->z * matrix[10] + v->w * matrix[14];
-    float w = v->x * matrix[3] + v->y * matrix[7] + v->z * matrix[11] + v->w * matrix[15];
+    float x = v->x * matrix[0] + v->y * matrix[1] + v->z * matrix[2] + v->w * matrix[3];
+    float y = v->x * matrix[4] + v->y * matrix[5] + v->z * matrix[6] + v->w * matrix[7];
+    float z = v->x * matrix[8] + v->y * matrix[9] + v->z * matrix[10] + v->w * matrix[11];
+    float w = v->x * matrix[12] + v->y * matrix[13] + v->z * matrix[14] + v->w * matrix[15];
     v->x = x;
     v->y = y;
     v->z = z;
