@@ -11,6 +11,17 @@ void vecByMatrix4x4(vec4* v, matrix4x4 matrix){
     v->w = w;
 }
 
+void vecByMatrix4x4_COLUMNMAJOR(vec4* v, matrix4x4 matrix){
+    float x = v->x * matrix[0] + v->y * matrix[4] + v->z * matrix[8] + v->w * matrix[12];
+    float y = v->x * matrix[1] + v->y * matrix[5] + v->z * matrix[9] + v->w * matrix[13];
+    float z = v->x * matrix[2] + v->y * matrix[6] + v->z * matrix[10] + v->w * matrix[14];
+    float w = v->x * matrix[3] + v->y * matrix[7] + v->z * matrix[11] + v->w * matrix[15];
+    v->x = x;
+    v->y = y;
+    v->z = z;
+    v->w = w;
+}
+
 vec3 crossProduct(vec3 v1, vec3 v2){
     vec3 result;
     result.x = v1.y * v2.z - v1.z * v2.y;
