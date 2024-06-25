@@ -1,4 +1,4 @@
-#include "matrices.h"
+#include "matrices.c"
 #include "mathTypes.h"
 void vecByMatrix4x4(vec4* v, matrix4x4 matrix){
     float x = v->x * matrix[0] + v->y * matrix[1] + v->z * matrix[2] + v->w * matrix[3];
@@ -125,7 +125,7 @@ vec3 dehomogenizeVector(vec4 v){
     return result;
 }
 
-vec3 dehomogenizeVectorWithPersective(vec4 v){
+vec3 dehomogenizeVectorWithPerspective(vec4 v){
     vec3 result;
     result.x = v.x / v.w;
     result.y = v.y / v.w;
