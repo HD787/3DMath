@@ -22,6 +22,23 @@ void vecByMatrix4x4_COLUMNMAJOR(vec4* v, matrix4x4 matrix){
     v->w = w;
 }
 
+//add vectors, w is ignored don't think it makes sense to include it
+vec4 addVectors(vec4 v1, vec4 v2){
+    vec4 ret;
+    ret.x = v1.x + v2.x;
+    ret.y = v1.y + v2.y;
+    ret.z = v1.z + v2.z;
+    return ret;
+}
+
+vec4 scaleVector(vec4 vec, float scalar){
+    vec4 ret;
+    ret.x = vec.x * scalar;
+    ret.y = vec.y * scalar;
+    ret.z = vec.z * scalar;
+    return ret;
+}
+
 vec3 crossProduct(vec3 v1, vec3 v2){
     vec3 result;
     result.x = v1.y * v2.z - v1.z * v2.y;
@@ -40,8 +57,6 @@ void normalizeVector(vec3* v){
     v->y /= normalVal;
     v->z /= normalVal;
 }
-
-
 
 //Quaternion operations
 void normalizeQuatertion(quaternion* quat){
