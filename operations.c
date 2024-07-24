@@ -28,6 +28,7 @@ vec4 addVectors(vec4 v1, vec4 v2){
     ret.x = v1.x + v2.x;
     ret.y = v1.y + v2.y;
     ret.z = v1.z + v2.z;
+    ret.w = 1.0f;
     return ret;
 }
 
@@ -36,6 +37,7 @@ vec4 scaleVector(vec4 vec, float scalar){
     ret.x = vec.x * scalar;
     ret.y = vec.y * scalar;
     ret.z = vec.z * scalar;
+    ret.w = 1.0f;
     return ret;
 }
 
