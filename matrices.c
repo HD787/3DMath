@@ -166,3 +166,12 @@ void createNDCToScreenSpaceMatrix_COLUMNMAJOR(float width, float height, float m
     matrix[2] = 0.0;                matrix[6] = 0.0f;               matrix[10] = (height / 2.0f);   matrix[14] = (height / 2.0f);
     matrix[3] = 0.0f;               matrix[7] = 0.0f;               matrix[11] = 0.0f;              matrix[15] = 1.0f;
 }
+
+float[16] generateIdentityMatrix(){
+    float[16] matrix;
+    matrix[0] = 1.0f;  matrix[1] = 0.0f;  matrix[2] = 0.0;   matrix[3] = 0.0f;
+    matrix[4] = 0.0f;  matrix[5] = 1.0f;  matrix[6] = 0.0f;  matrix[7] = 0.0f;
+    matrix[8] = 0.0f;  matrix[9] = 0.0f;  matrix[10] = 1.0;  matrix[11] = 0.0f;
+    matrix[12] = 0.0f; matrix[13] = 0.0f; matrix[14] = 0.0f; matrix[15] = 1.0f;
+    return matrix;
+}
